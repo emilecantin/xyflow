@@ -3,14 +3,17 @@ import { shallow } from 'zustand/shallow';
 import { getNodesInside } from '@xyflow/system';
 
 import { useStore } from './useStore';
-import type { Node, ReactFlowState } from '../types';
+import type { Node, ReactFlowState, ReactFlowProps } from '../types';
 
-const selector = (onlyRenderVisible: boolean) => (s: ReactFlowState) => {
-  return onlyRenderVisible
-    ? getNodesInside<Node>(s.nodeLookup, { x: 0, y: 0, width: s.width, height: s.height }, s.transform, true).map(
-        (node) => node.id
-      )
-    : Array.from(s.nodeLookup.keys());
+const selector = (onlyRenderVisible: boolean, filterNodes?: ReactFlowProps['filterNodes']) => (s: ReactFlowState) => {
+  let nodes = s.nodeLookup;
+  if (typeof filterNodes === 'function') {
+    nodes = filterNodes(nodes, s);
+  }
+  if (onlyRenderVisible) {
+    nodes = getNodesInside<Node>(nodes, { x: 0, y: 0, width: s.width, height: s.height }, s.transform, true);
+  }
+  return Array.from(nodes.keys());
 };
 
 /**
@@ -20,8 +23,8 @@ const selector = (onlyRenderVisible: boolean) => (s: ReactFlowState) => {
  * @param onlyRenderVisible
  * @returns array with visible node ids
  */
-export function useVisibleNodeIds(onlyRenderVisible: boolean) {
-  const nodeIds = useStore(useCallback(selector(onlyRenderVisible), [onlyRenderVisible]), shallow);
+export function useVisibleNodeIds(onlyRenderVisible: boolean, filterNodes?: ReactFlowProps['filterNodes']) {
+  const nodeIds = useStore(useCallback(selector(onlyRenderVisible, filterNodes), [onlyRenderVisible]), shallow);
 
   return nodeIds;
 }

@@ -75,6 +75,8 @@ function ReactFlow<NodeType extends Node = Node, EdgeType extends Edge = Edge>(
     snapToGrid,
     snapGrid,
     onlyRenderVisibleElements = false,
+    filterNodes = (nodes) => nodes,
+    filterEdges = (edges) => edges,
     selectNodesOnDrag,
     nodesDraggable,
     nodesConnectable,
@@ -192,6 +194,8 @@ function ReactFlow<NodeType extends Node = Node, EdgeType extends Edge = Edge>(
           panActivationKeyCode={panActivationKeyCode}
           zoomActivationKeyCode={zoomActivationKeyCode}
           onlyRenderVisibleElements={onlyRenderVisibleElements}
+          filterNodes={filterNodes}
+          filterEdges={filterEdges}
           defaultViewport={defaultViewport}
           translateExtent={translateExtent}
           minZoom={minZoom}

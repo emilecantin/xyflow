@@ -19,6 +19,8 @@ export type FlowRendererProps<NodeType extends Node = Node> = Omit<
   | 'connectionLineContainerStyle'
   | 'arrowHeadColor'
   | 'onlyRenderVisibleElements'
+  | 'filterNodes'
+  | 'filterEdges'
   | 'selectNodesOnDrag'
   | 'defaultMarkerColor'
   | 'rfId'

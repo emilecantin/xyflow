@@ -203,16 +203,16 @@ export const getNodesInside = <NodeType extends NodeBase = NodeBase>(
   partially = false,
   // set excludeNonSelectableNodes if you want to pay attention to the nodes "selectable" attribute
   excludeNonSelectableNodes = false
-): InternalNodeBase<NodeType>[] => {
+): Map<string, InternalNodeBase<NodeType>> => {
   const paneRect = {
     ...pointToRendererPoint(rect, [tx, ty, tScale]),
     width: rect.width / tScale,
     height: rect.height / tScale,
   };
 
-  const visibleNodes: InternalNodeBase<NodeType>[] = [];
+  const visibleNodes: Map<string, InternalNodeBase<NodeType>> = new Map();
 
-  for (const node of nodes.values()) {
+  for (const [key, node] of nodes.entries()) {
     const { measured, selectable = true, hidden = false } = node;
 
     if ((excludeNonSelectableNodes && !selectable) || hidden) {
@@ -230,7 +230,7 @@ export const getNodesInside = <NodeType extends NodeBase = NodeBase>(
     const isVisible = forceInitialRender || partiallyVisible || overlappingArea >= area;
 
     if (isVisible || node.dragging) {
-      visibleNodes.push(node);
+      visibleNodes.set(key, node);
     }
   }
 

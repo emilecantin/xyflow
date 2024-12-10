@@ -23,6 +23,8 @@ export type GraphViewProps<NodeType extends Node = Node, EdgeType extends Edge =
       | 'multiSelectionKeyCode'
       | 'connectionLineType'
       | 'onlyRenderVisibleElements'
+      | 'filterNodes'
+      | 'filterEdges'
       | 'translateExtent'
       | 'minZoom'
       | 'maxZoom'
@@ -66,6 +68,8 @@ function GraphViewComponent<NodeType extends Node = Node, EdgeType extends Edge 
   zoomActivationKeyCode,
   deleteKeyCode,
   onlyRenderVisibleElements,
+  filterNodes,
+  filterEdges,
   elementsSelectable,
   defaultViewport,
   translateExtent,
@@ -160,6 +164,7 @@ function GraphViewComponent<NodeType extends Node = Node, EdgeType extends Edge 
           onReconnectStart={onReconnectStart}
           onReconnectEnd={onReconnectEnd}
           onlyRenderVisibleElements={onlyRenderVisibleElements}
+          filterEdges={filterEdges}
           onEdgeContextMenu={onEdgeContextMenu}
           onEdgeMouseEnter={onEdgeMouseEnter}
           onEdgeMouseMove={onEdgeMouseMove}
@@ -187,6 +192,7 @@ function GraphViewComponent<NodeType extends Node = Node, EdgeType extends Edge 
           onNodeContextMenu={onNodeContextMenu}
           nodeClickDistance={nodeClickDistance}
           onlyRenderVisibleElements={onlyRenderVisibleElements}
+          filterNodes={filterNodes}
           noPanClassName={noPanClassName}
           noDragClassName={noDragClassName}
           disableKeyboardA11y={disableKeyboardA11y}

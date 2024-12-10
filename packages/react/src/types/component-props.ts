@@ -20,6 +20,8 @@ import type {
   OnError,
   ColorMode,
   SnapGrid,
+  NodeBase,
+  InternalNodeBase,
 } from '@xyflow/system';
 
 import type {
@@ -44,6 +46,7 @@ import type {
   OnNodeDrag,
   OnBeforeDelete,
   IsValidConnection,
+  ReactFlowState,
 } from '.';
 
 /**
@@ -312,6 +315,17 @@ export interface ReactFlowProps<NodeType extends Node = Node, EdgeType extends E
    * @default false
    */
   onlyRenderVisibleElements?: boolean;
+  /** You can use this function to filter visible nodes depending on Flow's state
+   * @default no-op function that returns the first argument
+   */
+  filterNodes?: <NodeType extends NodeBase = NodeBase>(
+    nodes: Map<string, InternalNodeBase<NodeType>>,
+    s: ReactFlowState
+  ) => Map<string, InternalNodeBase<NodeType>>;
+  /** You can use this function to filter visible nodes depending on Flow's state
+   * @default no-op function that returns the first argument
+   */
+  filterEdges?: (edges: Edge[], s: ReactFlowState) => Edge[];
   /** Controls if all nodes should be draggable
    * @default true
    */

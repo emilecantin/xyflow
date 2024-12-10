@@ -18,6 +18,7 @@ export type NodeRendererProps<NodeType extends Node> = Pick<
   | 'onNodeMouseLeave'
   | 'onNodeContextMenu'
   | 'onlyRenderVisibleElements'
+  | 'filterNodes'
   | 'noPanClassName'
   | 'noDragClassName'
   | 'rfId'
@@ -37,7 +38,7 @@ const selector = (s: ReactFlowState) => ({
 
 function NodeRendererComponent<NodeType extends Node>(props: NodeRendererProps<NodeType>) {
   const { nodesDraggable, nodesConnectable, nodesFocusable, elementsSelectable, onError } = useStore(selector, shallow);
-  const nodeIds = useVisibleNodeIds(props.onlyRenderVisibleElements);
+  const nodeIds = useVisibleNodeIds(props.onlyRenderVisibleElements, props.filterNodes);
   const resizeObserver = useResizeObserver();
 
   return (
